@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'github_url', 'image_preview'];
+    protected $fillable = ['title', 'type_id', 'description', 'github_url', 'image_preview'];
 
     public function getAbstract($n_chars = 30)
     {

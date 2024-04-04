@@ -17,14 +17,38 @@
             @if($project->id)
             @method('PUT')
             @endif
+            <div class="row">
 
-            <label for="title" class="form-label">Titolo: </label>
-            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ empty($project->id) ? '' : old('title') ?? $project->title }}" required max="50" />
-            @error('title')
-            <div class="invalid-feedback">
-                {{ $message }}
+                <div class="col-6">
+                    <label for="title" class="form-label">Titolo: </label>
+                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ empty($project->id) ? '' : old('title') ?? $project->title }}" required max="50" />
+                    @error('title')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="col-6">
+                    <label for="type_id" class="form-label">Tipologia: </label>
+                    <select name="type_id" id="type_id" class="form-select @error('type_id') is-invalid @enderror">
+
+
+                        <option class="d-none" value=''>Scegli la tipologia</option>
+
+                        @foreach ($types as $type)
+
+                        <option value="{{ $type->id }}" @if (old('type_id') ?? $project->type_id == $type->id) selected @endif>{{ $type->label }}</option>
+                        @endforeach
+                    </select>
+
+                    @error('type_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
             </div>
-            @enderror
 
             <label for="github_url" class="form-label">Github: </label>
             <input type="url" class="form-control @error('github_url') is-invalid @enderror" id="github_url" name="github_url" value="{{ empty($project->id) ? '' : old("github_url") ?? $project->github_url }}" />
