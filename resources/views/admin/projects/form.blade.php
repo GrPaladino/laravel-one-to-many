@@ -6,7 +6,7 @@
 <section>
     <div class="container py-4">
 
-        <a href="{{route('admin.projects.index')}}" class="btn btn-primary my-3">Torna alla lista</a>
+        <a href="{{route('admin.projects.index')}}" class="btn btn-primary my-3"><i class="fa-solid fa-table-list me-2"></i>Torna alla lista</a>
 
 
 
