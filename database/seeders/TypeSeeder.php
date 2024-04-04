@@ -16,19 +16,14 @@ class TypeSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        $type = new Type;
-        $type->label = 'backend';
-        $type->color = $faker->hexColor();
-        $type->save();
 
-        $type = new Type;
-        $type->label = 'frontend';
-        $type->color = $faker->hexColor();
-        $type->save();
+        $types_name = ['backend', 'frontend', 'fullstack'];
 
-        $type = new Type;
-        $type->label = 'fullstack';
-        $type->color = $faker->hexColor();
-        $type->save();
+        foreach ($types_name as $type_name) {
+            $type = new Type;
+            $type->label = $type_name;
+            $type->color = $faker->hexColor();
+            $type->save();
+        }
     }
 }

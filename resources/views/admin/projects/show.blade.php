@@ -17,7 +17,11 @@
             <img src="{{$project->image_preview}}" class="card-img-top" alt="{{$project->image_preview}}">
         </div>
         <div class="card-body d-flex flex-column justify-content-between">
-            <p class="card-text">{{$project->description}}</p>
+
+            <div class="description">
+                <p class="card-text">{{$project->description}}</p>
+                <p><strong>Tipologia: </strong>{!! $project->type ? $project->type->getBadge() : 'Nessuna tipologia' !!}</p>
+            </div>
             <div class="links text-start">
                 <a href="{{$project->github_url}}" class="mb-3"><i class="fa-brands fa-github link-dark fa-2xl me-3"></i></a>
                 <a href="{{route('admin.projects.edit', $project)}}" class="mb-3"><i class="fa-solid link-primary fa-pencil fa-xl me-3"></i></a>

@@ -14,6 +14,7 @@
                 <img src="{{$project->image_preview}}" class="card-img-top" alt="{{$project->image_preview}}">
                 <div class="card-body">
                     <h4 class="card-title mb-4">{{$project->title}}</h4>
+                    <p>{!! $project->type ? $project->type->getBadge() : 'Nessuna tipologia' !!}</p>
                     <p class="card-text my-4">{{$project->getAbstract(50)}}</p>
                 </div>
                 <div class="links p-4">

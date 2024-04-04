@@ -9,8 +9,14 @@ class Type extends Model
 {
     use HasFactory;
 
-    public function posts()
+    public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function getBadge()
+    {
+        return "<span class='badge' style='background-color: {$this->color}'>{$this->label}</span>";
+
     }
 }
