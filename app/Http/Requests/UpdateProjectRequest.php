@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,6 +29,7 @@ class StoreRequest extends FormRequest
             "description" => "nullable|string",
             "github_url" => "nullable|string|max:150",
             "image_preview" => "nullable|string|max:150",
+            'type_id' => ['nullable', 'exists:types,id']
         ];
     }
 
@@ -45,7 +46,9 @@ class StoreRequest extends FormRequest
 
             'github_url.string' => "L'url deve massimo di 150 caratteri",
 
-            'image_preview.string' => "L'url deve massimo di 150 caratteri"
+            'image_preview.string' => "L'url deve massimo di 150 caratteri",
+
+            'type.exists' => 'La tipologia inserita non è valida'
         ];
     }
 }
