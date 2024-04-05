@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Projects')
+
+
 @section('content')
 <div class="container mb-4">
     <h1 class="my-4">Lista Progetti</h1>
@@ -7,39 +10,43 @@
     <a href="{{route('admin.projects.create')}}" class="btn btn-primary mb-4"><i class="fa-solid fa-plus fa-lg me-2"></i>Nuovo progetto</a>
 
     <div class="row g-4">
+        <table class="table">
+            <thead>
+                <th>Titolo</th>
+                <th>Tipologia</th>
+                <th>Estratto</th>
+                <th></th>
+            </thead>
 
-        @forelse($projects as $project)
-        <div class="col-3">
-            <div class="card" style="width: 18rem;">
-                <img src="{{$project->image_preview}}" class="card-img-top" alt="{{$project->image_preview}}">
-                <div class="card-body">
-                    <h4 class="card-title mb-4">{{$project->title}}</h4>
-                    <p>{!! $project->type ? $project->type->getBadge() : 'Nessuna tipologia' !!}</p>
-                    <p class="card-text my-4">{{$project->getAbstract(50)}}</p>
-                </div>
-                <div class="links p-4">
-
-                    <a href="{{$project->github_url}}"><i class="fa-brands fa-github fa-xl link-dark"></i></a>
-                    <a href="{{route('admin.projects.show', $project)}}"><i class="fa-solid link-primary fa-eye fa-xl"></i></a>
-                    <a href="{{route('admin.projects.edit', $project)}}"><i class="fa-solid link-primary fa-pencil fa-xl"></i></a>
-                    <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal" data-bs-target="#project-{{$project->id}}">
-                        <i class="fa-solid fa-trash fa-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        @empty
-        <h2>Nessun Progetto trovato</h2>
-        @endforelse
+            <tbody>
+                @forelse($projects as $project)
+                <tr>
+                    <td>{{$project->title}}</td>
+                    <td>{!! $project->type ? $project->type->getBadge() : 'Nessuna tipologia' !!}</td>
+                    <td>{{$project->getAbstract(50)}}</td>
+                    <td>
+                        <a href="{{$project->github_url}}"><i class="fa-brands fa-github  link-dark me-2"></i></a>
+                        <a href="{{route('admin.projects.show', $project)}}"><i class="fa-solid link-primary fa-eye me-2"></i></a>
+                        <a href="{{route('admin.projects.edit', $project)}}"><i class="fa-solid link-primary fa-pencil me-2"></i></a>
+                        <button type="button" class="btn btn-link text-danger p-0 pb-1" data-bs-toggle="modal" data-bs-target="#project-{{$project->id}}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
 
 
+                    </td>
+                </tr>
+
+                @empty
+                <h2>Nessun Progetto trovato</h2>
+                @endforelse
+            </tbody>
+
+
+        </table>
     </div>
-
-
+    {{$projects->links()}}
 </div>
 
-{{$projects->links()}}
 @endsection
 
 
