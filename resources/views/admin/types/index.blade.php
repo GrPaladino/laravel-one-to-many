@@ -1,36 +1,35 @@
 @extends('layouts.app')
 
-@section('title', 'Projects')
+@section('title', 'Types')
 
 
 @section('content')
 <div class="container mb-4">
-    <h1 class="my-4">Lista Progetti</h1>
+    <h1 class="my-4">Lista Tipologie</h1>
 
-    <a href="{{route('admin.projects.create')}}" class="btn btn-primary mb-4"><i class="fa-solid fa-plus fa-lg me-2"></i>Nuovo progetto</a>
+    <a href="{{route('admin.types.create')}}" class="btn btn-primary mb-4"><i class="fa-solid fa-plus fa-lg me-2"></i>Nuovo tipologia</a>
 
     <div class="row g-4">
         <table class="table">
             <thead>
                 <th>ID</th>
-                <th>Titolo</th>
-                <th>Tipologia</th>
-                <th>Estratto</th>
+                <th>Label</th>
+                <th>Colore</th>
+                <th>Badge</th>
                 <th></th>
             </thead>
 
             <tbody>
-                @forelse($projects as $project)
+                @forelse($types as $type)
                 <tr>
-                    <td>{{$project->id}}</td>
-                    <td>{{$project->title}}</td>
-                    <td>{!! $project->type ? $project->type->getBadge() : 'Nessuna tipologia' !!}</td>
-                    <td>{{$project->getAbstract(50)}}</td>
+                    <td>{{$type->id}}</td>
+                    <td>{{$type->label}}</td>
+                    <td>{{$type->color}}</td>
+                    <td>{!! $type->getBadge() ?? 'Nessuna tipologia' !!}</td>
                     <td>
-                        <a href="{{$project->github_url}}"><i class="fa-brands fa-github  link-dark me-2"></i></a>
-                        <a href="{{route('admin.projects.show', $project)}}"><i class="fa-solid link-primary fa-eye me-2"></i></a>
-                        <a href="{{route('admin.projects.edit', $project)}}"><i class="fa-solid link-primary fa-pencil me-2"></i></a>
-                        <button type="button" class="btn btn-link text-danger p-0 pb-1" data-bs-toggle="modal" data-bs-target="#project-{{$project->id}}">
+                        <a href="{{route('admin.types.show', $type)}}"><i class="fa-solid link-primary fa-eye me-2"></i></a>
+                        <a href="{{route('admin.types.edit', $type)}}"><i class="fa-solid link-primary fa-pencil me-2"></i></a>
+                        <button type="button" class="btn btn-link text-danger p-0 pb-1" data-bs-toggle="modal" data-bs-target="#type-{{$type->id}}">
                             <i class="fa-solid fa-trash"></i>
                         </button>
 
@@ -46,7 +45,7 @@
 
         </table>
     </div>
-    {{$projects->links()}}
+    {{$types->links()}}
 </div>
 
 @endsection
@@ -54,21 +53,22 @@
 
 @section('modal')
 <!-- Modal -->
-@foreach($projects as $project)
+@foreach($types as $type)
 
-<div class="modal fade" id="project-{{$project->id}}" tabindex="-1" aria-labelledby="project-{{$project->id}}" aria-hidden="true">
+<div class="modal fade" id="type-{{$type->id}}" tabindex="-1" aria-labelledby="type-{{$type->id}}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminare {{$project->title}}?</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminare {{$type->label}}?</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                L'azione é irreversibile.
+                <p>L'azione é irreversibile.</p>
+                <p><span class="text-danger">Attenzione: </span><strong>L'eliminazione della tipologia comporta l'eliminazione di tutti i progetti ad esso collegati!!! Continuare?</strong></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                <form action="{{route('admin.projects.destroy', $project)}}" method="POST">
+                <form action="{{route('admin.types.destroy', $type)}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger">Elimina</button>

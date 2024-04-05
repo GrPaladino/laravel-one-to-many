@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Modifica progetto')
+@section('title', empty($project->id) ? "Crea Progetto" : "Modifica Progetto")
 
 @section('content')
 <section>

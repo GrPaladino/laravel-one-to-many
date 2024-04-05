@@ -10,8 +10,13 @@
                     <li class="nav-item">
                         <a @class(['nav-link', 'active'=> Route::currentRouteName() == 'home' || "dashboard"]) aria-current="page" href="{{Auth::check() ? route('admin.dashboard') : route('home')}}">Home</a>
                     </li>
-                    @auth <li class="nav-item">
+                    @auth
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.projects.index') }}">Projects</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.types.index') }}">Types</a>
                     </li>
                     @endauth
                 </ul>
