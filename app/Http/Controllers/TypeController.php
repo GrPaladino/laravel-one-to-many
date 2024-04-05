@@ -36,9 +36,7 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-
-        // $request->validated();
-
+        $request->validated();
         $data = $request->all();
         $type = new Type;
         $type->fill($data);
@@ -77,7 +75,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        // $request->validated();
+        $request->validated();
         $data = $request->all();
         $type->update($data);
         return redirect()->route('admin.types.show', $type)->with('message-class', 'alert-success')->with('message', 'Tipologia modificata correttamente.');
