@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -20,6 +21,12 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::paginate(10);
+
+        if (Auth::user()->role != 'admin') {
+            $projects->where('user_id', Auth::id());
+        }
+
+
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -45,8 +52,9 @@ class ProjectController extends Controller
         $data = $request->all();
         $project = new Project;
         $project->fill($data);
-
+        $project->user_id = Auth::id();
         $project->save();
+
         return redirect()->route('admin.projects.show', compact('project'))->with('message-class', 'alert-success')->with('message', 'Progetto inserito correttamente.');
     }
 
@@ -57,6 +65,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+
+        if ($project->user_id != Auth::id())
+            abort(403);
+
         return view('admin.projects.show', compact('project'));
     }
 
@@ -67,6 +79,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        if ($project->user_id != Auth::id())
+            abort(403);
+
         $types = Type::all();
         return view('admin.projects.form', compact('project', 'types'));
     }
@@ -79,6 +94,9 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        if ($project->user_id != Auth::id())
+            abort(403);
+
         $request->validated();
         $data = $request->all();
         $project->update($data);
@@ -92,6 +110,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if (Auth::user()->role != "admin")
+            abort(403);
+
         $project->delete();
         return redirect()->route('admin.projects.index')->with('message-class', 'alert-danger')->with('message', 'Progetto eliminato correttamente.');
     }

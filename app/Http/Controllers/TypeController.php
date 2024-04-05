@@ -25,6 +25,9 @@ class TypeController extends Controller
      */
     public function create(Type $type)
     {
+        if (Auth::user()->role != "admin")
+            abort(403);
+
         return view('admin.types.form', compact('type'));
 
     }
@@ -36,6 +39,9 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role != "admin")
+            abort(403);
+
         $request->validated();
         $data = $request->all();
         $type = new Type;
@@ -63,6 +69,9 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
+        if (Auth::user()->role != "admin")
+            abort(403);
+
         return view('admin.types.form', compact('type'));
 
     }
@@ -75,6 +84,9 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
+        if (Auth::user()->role != "admin")
+            abort(403);
+
         $request->validated();
         $data = $request->all();
         $type->update($data);
@@ -87,12 +99,11 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        $projects = Project::all();
+        if (Auth::user()->role != "admin")
+            abort(403);
 
-        foreach ($projects as $project) {
-            if ($project->type_id == $type->id) {
-                $project->delete();
-            }
+        foreach ($type->projects as $project) {
+            $project->delete();
         }
 
         $type->delete();

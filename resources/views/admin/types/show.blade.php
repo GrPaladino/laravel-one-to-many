@@ -12,6 +12,7 @@
     <p class="my-3">{!!$type->getBadge()!!}</p>
 
 
+    @if(auth()->user()->role == 'admin')
     <ul class="d-flex mt-4">
         <li>
             <a href="{{route('admin.types.edit', $type)}}" class="m2-3"><i class="fa-solid link-primary fa-pencil fa-xl me-3"></i></a>
@@ -25,6 +26,7 @@
         </li>
 
     </ul>
+    @endif
 </div>
 @endsection
 

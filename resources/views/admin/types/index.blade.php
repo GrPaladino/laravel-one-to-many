@@ -7,7 +7,9 @@
 <div class="container mb-4">
     <h1 class="my-4">Lista Tipologie</h1>
 
+    @if(auth()->user()->role == 'admin')
     <a href="{{route('admin.types.create')}}" class="btn btn-primary mb-4"><i class="fa-solid fa-plus fa-lg me-2"></i>Nuovo tipologia</a>
+    @endif
 
     <div class="row g-4">
         <table class="table">
@@ -28,10 +30,13 @@
                     <td>{!! $type->getBadge() ?? 'Nessuna tipologia' !!}</td>
                     <td>
                         <a href="{{route('admin.types.show', $type)}}"><i class="fa-solid link-primary fa-eye me-2"></i></a>
+
+                        @if(auth()->user()->role == 'admin')
                         <a href="{{route('admin.types.edit', $type)}}"><i class="fa-solid link-primary fa-pencil me-2"></i></a>
                         <button type="button" class="btn btn-link text-danger p-0 pb-1" data-bs-toggle="modal" data-bs-target="#type-{{$type->id}}">
                             <i class="fa-solid fa-trash"></i>
                         </button>
+                        @endif
 
 
                     </td>

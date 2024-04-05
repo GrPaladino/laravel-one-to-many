@@ -14,6 +14,11 @@
             <thead>
                 <th>ID</th>
                 <th>Titolo</th>
+                @if(auth()->user()->role == 'admin')
+                <th>Autore</th>
+                @endif
+
+
                 <th>Tipologia</th>
                 <th>Estratto</th>
                 <th></th>
@@ -24,6 +29,9 @@
                 <tr>
                     <td>{{$project->id}}</td>
                     <td>{{$project->title}}</td>
+                    @if(auth()->user()->role == 'admin')
+                    <td>{{$project->user->name}}</td>
+                    @endif
                     <td>{!! $project->type ? $project->type->getBadge() : 'Nessuna tipologia' !!}</td>
                     <td>{{$project->getAbstract(50)}}</td>
                     <td>
